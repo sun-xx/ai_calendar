@@ -25,15 +25,19 @@ def hour_format(time_str):
     This function converts a 12-hour format time string to a 24-hour format time string.
     Supported formats: H:Mam, H:M am, H:MAM, H:M AM, etc.
     """
+    period = ""
     time_str = time_str.strip().upper()
     if "AM" in time_str or "A.M." in time_str:
         period = "AM"
-    else:
+    if "PM" in time_str or "P.M." in time_str:
         period = "PM"
     time_str = time_str.replace("AM", "").replace("PM", "").replace("A.M.", "").replace("P.M.", "").strip()
     hour, minute = map(int, time_str.split(":"))
+    
+    if period == "":
+        period = "PM" if hour > 12 else "AM"
 
-    if period == "PM" and hour != 12:
+    if period == "PM" and hour <= 12:
         hour += 12
     elif period == "AM" and hour == 12:
         hour = 0
@@ -45,7 +49,7 @@ def insert_data(date_str, hour_str, event_str, location_str):
     This function formats the input data and writes it to CDSL file.
     """
     date = date_format(date_str)
-    hour = hour_format(hour_str)
+    hour = hour_str
 
     data = {
         "date": date,
@@ -68,5 +72,6 @@ def select_data(data_str):
         for i in data:
             if i["date"] == data_str:
                 result.append([i["time"], i["event"], i["location"]])
-
+    if len(result) == 0:
+        result = "暂无日程"
     return result

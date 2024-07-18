@@ -31,5 +31,3 @@ def extract_info(input_str):
         return match.group(1)
     else:
         return None
-
-#print(extract_info("后天晚上六点到原神游泳馆游泳"))

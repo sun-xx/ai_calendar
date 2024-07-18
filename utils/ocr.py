@@ -54,6 +54,3 @@ def ocr(image_path):
         return s
     else:
         return None
-    
-print(ocr("c:/users/pc/desktop/test.jpg"))
-

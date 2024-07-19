@@ -47,9 +47,12 @@ def ocr(image_path):
     if response:
         data = response.json()
         data = data["words_result"]
-        s = ''
-        for i in data:
-            s += i["words"]
+        if len(data) > 1:
+            s = []
+            for i in data:
+                s.append(i["words"])
+        if len(data) == 1:
+            s = data[0]["words"]
 
         return s
     else:

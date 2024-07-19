@@ -59,7 +59,7 @@ def insert_data(date_str, hour_str, event_str, location_str):
     }
         
     with open("./db.yaml", "a+", encoding="utf-8") as f:
-        f.write("---\n")
+        f.write("\n---\n")
         yaml.dump(data=data, stream=f, allow_unicode=True)
 
 def select_data(data_str):

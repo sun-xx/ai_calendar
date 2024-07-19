@@ -98,7 +98,6 @@ class MainWindow(QWidget):
     def show_information(self, date):
         global ch
         date = date.toString("yyyy-MM-dd")
-        print(date)
         ch.show(db.select_data(date))
 
     def show_dialog(self):
@@ -164,7 +163,7 @@ class MainWindow(QWidget):
 
     def send_text(self):
         text = self.lineedit.text()
-        self.work_thread = Thread(text)        
+        self.work_thread = Thread(msg=text, signal='single')        
         self.lineedit.clear()
         self.work_thread.start()
 
@@ -181,7 +180,8 @@ class ChildWindow(QWidget):
         self.browser.setFixedHeight(300)
         self.browser.setFixedWidth(400)
         for i in info:
-            st = i[0] + i[1] + ',在' + i[2] + '\n'
+            if i:
+                st = i[0] + i[1] + ',在' + i[2] + '\n'
             self.browser.append(st)
         super().show()
 
